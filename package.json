@@ -5,6 +5,7 @@
   "type": "commonjs",
   "scripts": {
     "start": "cross-env NODE_ENV=production npx ts-node-dev src/index.ts",
+    "build": "tsc",
     "test": "cross-env NODE_ENV=testing mocha -r ts-node/register --exit --recursive src/test/*.spec.ts",
     "test-load" : "artillery run src/test/test-load.yaml"
   },
