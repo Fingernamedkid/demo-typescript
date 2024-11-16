@@ -1,0 +1,366 @@
+{
+	"info": {
+		"_postman_id": "3da3bf59-7f47-4639-938c-d2c18fd20258",
+		"name": "Testing Api As Admin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38800247"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Set betterToken as a collection variable\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.collectionVariables.set(\"token\", jsonData.betterToken);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n  \"email\": \"admin@gmail.com\",\r\n  \"password\": \"Admin123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:3020/users/login",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3020",
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddProduct",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"title\": \"Saint Predator\",\r\n        \"price\": 2799,\r\n        \"description\": \"A rocket launcher used by Misaki. Upon firing, it separates into a cluster ordinance when it reaches a certain altitude, creating a wide explosion.\",\r\n        \"category\": \"Rocket Launcher\",\r\n        \"image\": \"https://static.wikia.nocookie.net/blue-archive/images/b/be/Misaki_UE.png/revision/latest?cb=20220524053355\",\r\n        \"rating\": {\r\n            \"rate\": 5,\r\n            \"count\": 69420\r\n        },\r\n        \"stock\": 1\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:3020/products",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3020",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetProductWithoutQuery",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Save betterToken\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.environment.set(\"productId\", jsonData[0].id);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.request.headers.add({\r",
+							"    key: 'Authorization',\r",
+							"    value: `${pm.environment.get('token')}`\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://localhost:3020/products",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3020",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetProduct",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Save betterToken\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.environment.set(\"productId\", jsonData[0].id);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.request.addQueryParams([\r",
+							"    { key: 'minPrice', value: '2799' },\r",
+							"    { key: 'maxPrice', value: '2800' },\r",
+							"    { key: 'minStock', value: '1' },\r",
+							"    { key: 'maxStock', value: '1' }\r",
+							"]);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://localhost:3020/products",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3020",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EditProduct",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"title\": \"Scorpius\",\r\n        \"price\": 54999,\r\n        \"description\": \"A submachine gun used by Atsuko. It has intense firepower for its short barrel, and is especially suited for close-range combat.\",\r\n        \"category\": \"Assault Rifle\",\r\n        \"image\": \"https://static.wikia.nocookie.net/blue-archive/images/3/39/Atsuko_UE.png/revision/latest?cb=20220608135451\",\r\n        \"rating\": {\r\n            \"rate\": 5,\r\n            \"count\": 42069\r\n        },\r\n        \"stock\": 1\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:3020/products/{{productId}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3020",
+					"path": [
+						"products",
+						"{{productId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteProduct",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:3020/products/{{productId}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3020",
+					"path": [
+						"products",
+						"{{productId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "{{token}}",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "{{productId}}",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "productId",
+			"value": ""
+		}
+	]
+}

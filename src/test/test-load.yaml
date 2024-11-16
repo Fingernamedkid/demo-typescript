@@ -1,0 +1,11 @@
+config:
+  target: 'https://localhost:3020'
+  phases:
+    - duration: 60  # Durée du test en secondes
+      arrivalRate: 10  # Requêtes par seconde
+  tls:
+    rejectUnauthorized: false  # Accept self-signed certificates
+scenarios:
+  - flow:
+      - get:
+          url: "/users/login"
