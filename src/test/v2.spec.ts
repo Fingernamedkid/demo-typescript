@@ -7,8 +7,8 @@ let expect: Chai.ExpectStatic;
   const chai = await import('chai');
   expect = chai.expect;
 })();
-let token: string = "";
-let productId = '';
+let token: string ;
+let productId : string;
 
 
 
@@ -67,7 +67,7 @@ describe('API Tests', () => {
     request(app)
       .get('/v2/products')
       .set('Authorization', token)
-      .query({ minPrice: 2799, maxPrice: 2800, minStock: 1, maxStock: 1 })
+      .query({ minPrice: 2790, maxPrice: 2801, minStock: 1, maxStock: 1 })
       .expect('Content-Type', /json/)
       .expect(200)
       .end((err, res) => {
