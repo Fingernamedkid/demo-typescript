@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [23.x]
+        node-version: [22.11.x]
 
     steps:
       - name: Checkout repository
@@ -37,6 +37,6 @@ jobs:
         run: npm test
         env:
           NODE_ENV: testing
-          
+
       - name: Run security tests
         run: npm audit
