@@ -22,6 +22,7 @@ describe('API Tests', () => {
       .end((err, res) => {
         if (err) return done(err);
         token = res.body.betterToken;
+        console.log('Token:', token); // Add this line to log the token
         done();
       });
   });
