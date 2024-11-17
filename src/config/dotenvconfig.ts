@@ -3,7 +3,7 @@ import path from 'path';
 
 export function loadEnvConfig() {
     
-    dotenv.config({ path: process.env.NODE_ENV === 'test' ? './src/config/production.env' : './src/config/production.env' });
+    dotenv.config({ path: process.env.NODE_ENV === 'production' ? './src/config/production.env' : './src/config/testing.env' });
     const config = {
         secretKey: process.env.secret,
         saltRound: process.env.SALTROUND,
