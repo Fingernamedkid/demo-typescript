@@ -121,7 +121,7 @@ describe('API Tests', () => {
   });
 });
 
-afterEach(function () {
+after(function () {
   // Stop the server after running the tests
   server.close()
 });
