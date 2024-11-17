@@ -8,8 +8,8 @@ let expect: Chai.ExpectStatic;
   expect = chai.expect;
 })();
 
-let token: string = "";
-let productId = '';
+let token: string ;
+let productId : string;
 
 
 
