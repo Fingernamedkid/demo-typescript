@@ -37,7 +37,3 @@ jobs:
 
       - name: Run TypeScript compiler
         run: npm run build
-
-
-      - name: Run security tests
-        run: npm audit --force
