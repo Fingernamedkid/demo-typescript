@@ -5,14 +5,14 @@ export function loadEnvConfig() {
     
     dotenv.config({ path: process.env.NODE_ENV === 'production' ? './src/config/production.env' : './src/config/testing.env' });
     const config = {
-        secretKey: process.env.secret,
-        saltRound: process.env.SALTROUND,
-        admin: process.env.ADMIN,
+        secretKey: process.env.secret || 'secret',
+        saltRound: process.env.SALTROUND || 0,
+        admin: process.env.ADMIN || ['admin'],
 
-        all: process.env.ALL,
-        dbHost: process.env.DB_HOST,
-        dbName: process.env.DB_NAME,
-        dbCollection: process.env.DB_COLLECTION,
+        all: process.env.ALL || ['admin', 'user'],
+        dbHost: process.env.DB_HOST || 'localhost',
+        dbName: process.env.DB_NAME || 'test',
+        dbCollection: process.env.DB_COLLECTION || 'test',
     };
     return config;
 }
